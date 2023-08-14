@@ -20,6 +20,7 @@
     <button onclick="add()" id="add">add</button>
     <input type="number" id="deleteIndex" placeholder="Index to delete">
     <button onclick="remove()">delete</button>
+    <button onclick="addPic()">add picture</button>
     <script>
         let i = 0
         let students = [
@@ -51,16 +52,20 @@
             students.push({ name: `student${students.length + 1}`, age: `age${students.length + 1}` }) 
             updateDisplay()
         }
-       
         function remove() {
-            const index = parseInt(document.getElementById('deleteIndex').value);
+            index = parseInt(document.getElementById('deleteIndex').value)-1;
             if (!isNaN(index) && index >= 0 && index < students.length) {
                 students.splice(index, 1);
                 updateDisplay();
             }
         }
-
-        console.log(students);
+        function addPic() {
+                students.push({image: `https://picsum.photos/id/237/200/300`});
+                updateDisplay();
+            }
+        
+        // https://picsum.photos/id/237/200/300
+        console.table(students);
     </script>
 </body>
 
