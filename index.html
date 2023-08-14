@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- next previous last first
+    add delete -->
+    <div id="block" style="width: 250px; height: 250px; background-color: bisque;">
+        bla
+    </div><br>
+    <button onclick="next()" id="next">next</button>
+    <button onclick="previous()" id="previous">previous</button>
+    <button onclick="last()" id="last">last</button>
+    <button onclick="first()" id="first">first</button>
+    <button onclick="add()" id="add">add</button>
+    <input type="number" id="deleteIndex" placeholder="Index to delete">
+    <button onclick="remove()">delete</button>
+    <script>
+        let i = 0
+        let students = [
+            { "name": "student1", "age": "age1" },
+            { "name": "student2", "age": "age2" },
+            { "name": "student3", "age": "age3" },
+            { "name": "student4", "age": "age4" },
+            { "name": "student5", "age": "age5" }
+        ]
+        updateDisplay()
+        function updateDisplay() {
+            block.innerHTML = `${students[i % students.length].name} ${students[i % students.length].age}`
+        }
+        function next() {
+            i = i < students.length ? ++i : 0
+            updateDisplay()
+        }
+        function previous() {
+            i = i > 0 ? --i : 0
+            updateDisplay()
+        }
+        function last() {
+            block.innerHTML = `${students[students.length - 1].name} ${students[students.length - 1].age}`
+        }
+        function first() {
+            block.innerHTML = `${students[0].name} ${students[0].age}`
+        }
+        function add() { 
+            students.push({ name: `student${students.length + 1}`, age: `age${students.length + 1}` }) 
+            updateDisplay()
+        }
+       
+        function remove() {
+            const index = parseInt(document.getElementById('deleteIndex').value);
+            if (!isNaN(index) && index >= 0 && index < students.length) {
+                students.splice(index, 1);
+                updateDisplay();
+            }
+        }
+
+        console.log(students);
+    </script>
+</body>
+
+</html>
