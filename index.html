@@ -18,13 +18,13 @@
     <button onclick="last()" id="last">last</button>
     <button onclick="first()" id="first">first</button>
     <button onclick="add()" id="add">add</button>
-    <input type="number" id="deleteIndex" placeholder="Index to delete">
     <button onclick="remove()">delete</button>
     <button onclick="addPic()">add picture</button>
+    <button onclick="resetData()">reset data</button>
     <script>
         let i = 0
         let res = []
-        fetchDB()   
+        fetchDB()
         async function fetchDB() {
             let serverR = "https://jsonplaceholder.typicode.com/users"
             let serverL = "http://localhost:3000/posts"
@@ -35,7 +35,8 @@
             //block.innerHTML = `${res[i%res.length].id} ${res[i%res.length].title} ${res[i%res.length].author}`;
             console.log(res);
             console.log(i);
-            block.innerHTML = `
+            if (res.length != 0){
+            block.innerHTML = `Showing entry ${i+1} ot of ${res.length}:<hr>
                 id: ${res[i % res.length].id}, 
                 name: ${res[i % res.length].name},
                 username: ${res[i % res.length].username}<br>
@@ -51,6 +52,8 @@
                 catchphrase: ${res[i % res.length].company.catchPhrase},
                 bs: ${res[i % res.length].company.bs}
                 `
+            }else
+            block.innerHTML = "Nothing to display"    
         }
         function next() {
             i = i < res.length ? ++i : 0
@@ -66,6 +69,10 @@
         }
         function first() {
             i = 0
+            updateDisplay()
+        }
+        function resetData() {
+            res = []
             updateDisplay()
         }
         function add() {
