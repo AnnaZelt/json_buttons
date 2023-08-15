@@ -10,8 +10,8 @@
 <body>
     <!-- next previous last first
     add delete -->
-    <div id="block" style="width: 250px; height: 250px; background-color: bisque;">
-        bla
+    <div style="width: 500px; height: 250px; background-color: bisque;">
+        <p id="block" style="margin: 2%;"></p>
     </div><br>
     <button onclick="next()" id="next">next</button>
     <button onclick="previous()" id="previous">previous</button>
@@ -23,19 +23,37 @@
     <button onclick="addPic()">add picture</button>
     <script>
         let i = 0
-        let students = [
-            { "name": "student1", "age": "age1" },
-            { "name": "student2", "age": "age2" },
-            { "name": "student3", "age": "age3" },
-            { "name": "student4", "age": "age4" },
-            { "name": "student5", "age": "age5" }
-        ]
-        updateDisplay()
+        let res = []
+        fetchDB()   
+        async function fetchDB() {
+            let serverR = "https://jsonplaceholder.typicode.com/users"
+            let serverL = "http://localhost:3000/posts"
+            res = await fetch(serverR).then(response => response.json())
+            updateDisplay()
+        }
         function updateDisplay() {
-            block.innerHTML = `${students[i % students.length].name} ${students[i % students.length].age}`
+            //block.innerHTML = `${res[i%res.length].id} ${res[i%res.length].title} ${res[i%res.length].author}`;
+            console.log(res);
+            console.log(i);
+            block.innerHTML = `
+                id: ${res[i % res.length].id}, 
+                name: ${res[i % res.length].name},
+                username: ${res[i % res.length].username}<br>
+                address:<br>street: ${res[i % res.length].address.street},
+                suite: ${res[i % res.length].address.suite},
+                city: ${res[i % res.length].address.city},
+                zipcode: ${res[i % res.length].address.zipcode},
+                lat: ${res[i % res.length].address.geo.lat},
+                lng: ${res[i % res.length].address.geo.lng}<br>
+                phone: ${res[i % res.length].phone},
+                website: ${res[i % res.length].website}<br>
+                company:<br>name: ${res[i % res.length].company.name},
+                catchphrase: ${res[i % res.length].company.catchPhrase},
+                bs: ${res[i % res.length].company.bs}
+                `
         }
         function next() {
-            i = i < students.length ? ++i : 0
+            i = i < res.length ? ++i : 0
             updateDisplay()
         }
         function previous() {
@@ -43,29 +61,22 @@
             updateDisplay()
         }
         function last() {
-            block.innerHTML = `${students[students.length - 1].name} ${students[students.length - 1].age}`
+            i = res.length - 1
+            updateDisplay()
         }
         function first() {
-            block.innerHTML = `${students[0].name} ${students[0].age}`
+            i = 0
+            updateDisplay()
         }
-        function add() { 
-            students.push({ name: `student${students.length + 1}`, age: `age${students.length + 1}` }) 
+        function add() {
             updateDisplay()
         }
         function remove() {
-            index = parseInt(document.getElementById('deleteIndex').value)-1;
-            if (!isNaN(index) && index >= 0 && index < students.length) {
-                students.splice(index, 1);
-                updateDisplay();
-            }
+            updateDisplay()
         }
         function addPic() {
-                students.push({image: `https://picsum.photos/id/237/200/300`});
-                updateDisplay();
-            }
-        
-        // https://picsum.photos/id/237/200/300
-        console.table(students);
+            updateDisplay()
+        }
     </script>
 </body>
 

@@ -9,13 +9,12 @@
 
 <body>
     <button onclick="fetchDB()">
-        getData
+        get data
     </button>
     <script>
-        function fetchDB() {
-            fetch('https://jsonplaceholder.typicode.com/todos/1')
-                .then(response => response.json())
-                .then(json => console.log(json))
+        async function fetchDB() {
+            let server = "https://jsonplaceholder.typicode.com/todos/1"
+            let res = await fetch(server).then(response => response.json())
         }
     </script>
 </body>
